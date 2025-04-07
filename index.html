@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Warranty sticker validation</title>
     <style>
-        
         * {
             margin: 0;
             padding: 0;
@@ -71,20 +70,46 @@
             margin: 0 auto 30px auto;
         }
         
+        .arabic-text {
+            font-family: 'Traditional Arabic', 'Arial Arabic', 'Simplified Arabic', sans-serif;
+            font-size: 1rem;
+            direction: rtl;
+            display: inline-block;
+        }
+        
         .warning-message {
             color: red;
             margin: 25px 0;
             padding: 0;
             text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .warning-text-bold {
             font-weight: bold;
-            font-size: 0.9rem; /* تقليل حجم الخط */
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+
+        .warning-text-normal {
+            font-weight: normal;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+
+        .notice-title {
+            font-weight: bold;
+            display: block;
         }
 
         .warning-url {
             text-decoration: underline;
             font-weight: bold;
-            color: darkred;
+            color: #000000;
+            display: block;
+            margin: 5px 0;
         }
+
         .banner {
             width: 100%;
             max-height: 200px;
@@ -142,26 +167,26 @@
 
         #result {
             margin: 20px auto;
-            padding: 25px; /* الحفاظ على المساحة الداخلية */
+            padding: 25px;
             font-size: 1.1rem;
             max-width: 450px;
-            min-height: 100px; /* الحفاظ على الارتفاع */
+            min-height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            background-color: transparent; /* إزالة الخلفية */
-            border: none; /* إزالة الحدود */
+            background-color: transparent;
+            border: none;
         }
 
         .success {
-            color: #90EE90; /* لون الخط الأخضر */
-            font-weight: bold; /* الخط عريض */
+            color: #90EE90;
+            font-weight: bold;
         }
 
         .error {
-            color: #ff0000; /* لون الخط الأحمر */
-            font-weight: bold; /* الخط عريض */
+            color: #ff0000;
+            font-weight: bold;
         }
 
         .links {
@@ -291,23 +316,23 @@
 
         <h2>Warranty sticker validation</h2>
 
-            <div class="warning-message">
-            <p>
+        <div class="warning-message">
+            <p class="warning-text-bold">
                 <img src="https://i.postimg.cc/66D66Vst/Warning-tag-A.png" alt="Website Banner" class="banner">
                 نحذر عملائنا الكرام من وجود ملصق ضمان مزور يحتوي على رمز إستجابة سريع يوجه المستخدمين لصفحة إلكترونية مزورة تشبه هذه الصفحة.<br>
-                تأكد دائماً من عنوان الصفحة الصحيح:<br>
+                تأكد دائمًا من عنوان الصفحة الصحيح:
                 <span class="warning-url">https://arabcomputers-com-as.github.io/arabcomputers-com-as/</span>
             </p>
-            <p>
-                Important Notice to Our Valued Customers:<br>
+            <p class="warning-text-normal">
+                <span class="notice-title">Important Notice to Our Valued Customers:</span>
                 We would like to alert you to the presence of counterfeit warranty stickers featuring a QR code that directs users to a fraudulent website designed to imitate the official Arab Computers website.<br>
                 Always verify the correct page address:<br>
-                
             </p>
-               </div> 
+        </div>
+
         <p class="main-description">
             Check if the warranty sticker on your product is genuine and protect yourself from fake sticker.<br>
-            تأكد إذا كان ملصق الضمان الموجود على منتجك هو ملصق أصلي أو مزيف
+            <span class="arabic-text">تأكد إذا كان ملصق الضمان الموجود على منتجك هو ملصق أصلي أو مزيف</span>
         </p>
 
         <img src="https://i.postimg.cc/05tBw257/undefined-Imgur.png" alt="Website Banner" class="banner">
@@ -325,7 +350,6 @@
         <div id="result"></div>
     </div>
 
-    <!-- الأزرار في الجزء السفلي -->
     <div class="bottom-buttons">
         <button class="menu-button">☰</button>
         <button class="home-button">
@@ -335,7 +359,6 @@
         </button>
     </div>
 
-    <!-- روابط مفيدة -->
     <div class="links">
         <div class="left-section">
             <div>
