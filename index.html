@@ -1,1 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warranty sticker validation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 15px;
+            background-color: #fff;
+        }
+
+        .header-content {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 100px;
+            margin-bottom: 10px;
+        }
+
+        .breadcrumb {
+            font-size: 0.9rem;
+            color: #777;
+            margin: 10px 0 15px 0;
+        }
+
+        .breadcrumb a {
+            color: #000 !important;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: #333 !important;
+            text-decoration: underline;
+        }
+
+        h2 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 20px 0;
+            letter-spacing: 1px;
+        }
+
+        .main-description {
+            text-align: center;
+            font-weight: normal;
+            font-size: 1rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+        }
+        
+        .arabic-text {
+            font-family: 'Traditional Arabic', 'Arial Arabic', 'Simplified Arabic', sans-serif;
+            font-size: 1rem;
+            direction: rtl;
+            display: inline-block;
+        }
+        
+        .warning-message {
+            color: red;
+            margin: 25px 0;
+            padding: 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .warning-text-bold {
+            font-weight: bold;
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+
+        .warning-text-normal {
+            font-weight: normal;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+
+        .notice-title {
+            font-weight: bold;
+            display: block;
+        }
+
+        .warning-url {
+            text-decoration: underline;
+            font-weight: bold;
+            color: #000000;
+            display: block;
+            margin: 5px 0;
+        }
+
+        .banner {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .input-instruction {
+            text-align: center;
+            font-weight: normal;
+            font-size: 0.9rem;
+            margin: 15px 0;
+        }
+
+        .input-container {
+            width: 45%;
+            max-width: 300px;
+            display: flex;
+            align-items: center;
+            border: 2px solid #cccccc;
+            border-radius: 25px 0 0 25px;
+            overflow: hidden;
+            margin: 10px auto;
+            height: 40px;
+        }
+
+        .input-container input {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            font-size: 0.9rem;
+            outline: none;
+            border-radius: 25px 0 0 25px;
+            text-align: left;
+            height: 100%;
+        }
+
+        .input-container button {
+            padding: 0 20px;
+            background-color: #a8822b;
+            color: white;
+            border: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            height: 100%;
+            border-radius: 0;
+            min-width: 80px;
+        }
+
+        .input-container button.pressed {
+            background-color: white !important;
+            color: #a8822b !important;
+        }
+
+        #result {
+            margin: 20px auto;
+            padding: 25px;
+            font-size: 1.1rem;
+            max-width: 450px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: transparent;
+            border: none;
+        }
+
+        .success {
+            color: #90EE90;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #ff0000;
+            font-weight: bold;
+        }
+
+        .links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .right-section {
+            flex: 1;
+            margin-left: 20px;
+            text-align: left;
+        }
+
+        .right-section h2 {
+            text-align: left;
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .right-section p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+
+        .center-text {
+            text-align: center !important;
+            font-weight: bold !important;
+            color: black !important;
+            margin: 5px 0;
+        }
+
+        .dpp-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .bottom-buttons {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 8px 20px;
+            background-color: white;
+            border-top: 1px solid #ddd;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .bottom-buttons button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #777;
+            padding: 5px 10px;
+            transition: color 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .bottom-buttons button:hover {
+            color: #333;
+        }
+
+        .home-button {
+            margin-left: 20px;
+        }
+
+        .menu-button {
+            margin-right: 20px;
+        }
+
+        .home-icon {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: #777;
+            stroke-width: 2;
+            transition: stroke 0.3s ease;
+        }
+
+        .home-button:hover .home-icon {
+            stroke: #333;
+        }
+
+        @media (max-width: 768px) {
+            .input-container {
+                width: 70%;
+            }
+            
+            .input-container button {
+                padding: 12px 20px;
+            }
+
+            .links {
+                flex-direction: column;
+            }
+
+            .right-section {
+                margin-left: 0;
+                margin-top: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .input-container {
+                width: 90%;
+            }
+            
+            .input-container button {
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-content">
+            <img src="https://i.postimg.cc/zvf2c47L/image.png" alt="Website Logo" class="logo">
+            <div class="breadcrumb">
+                <a href="#">Home</a> / <a href="#">Check sticker</a>
+            </div>
+        </div>
+
+        <h2>Warranty sticker validation</h2>
+
+        <div class="warning-message">
+            <p class="warning-text-bold">
+                <img src="https://i.postimg.cc/66D66Vst/Warning-tag-A.png" alt="Website Banner" class="banner">
+                نحذر عملائنا الكرام من وجود ملصق ضمان مزور يحتوي على رمز إستجابة سريع يوجه المستخدمين لصفحة إلكترونية مزورة تشبه هذه الصفحة.<br>
+                تأكد دائمًا من عنوان الصفحة الصحيح:
+                <span class="warning-url">arabcombuter.com.sa/check-sticker</span>
+            </p>
+            <p class="warning-text-normal">
+                <span class="notice-title">Important Notice to Our Valued Customers:</span>
+                We would like to alert you to the presence of counterfeit warranty stickers featuring a QR code that directs users to a fraudulent website designed to imitate the official Arab Computers website.<br>
+                <br>
+            </p>
+        </div>
+
+        <p class="main-description">
+            Check if the warranty sticker on your product is genuine and protect yourself from fake sticker.<br>
+            <span class="arabic-text">تأكد إذا كان ملصق الضمان الموجود على منتجك هو ملصق أصلي أو مزيف</span>
+        </p>
+
+        <img src="https://i.postimg.cc/1XhL17mC/Screenshot-20251026-022901.jpg" alt="Website Banner" class="banner">
+
+        <p class="input-instruction">
+            Enter the number shown on the sticker in this box<br>
+            أدخل الرقم الموجود على الملصق هنا   
+        </p>
+
+        <div class="input-container">
+            <input type="text" id="numberInput" placeholder="XXXXXX">
+            <button type="submit" onclick="validateForm(event)">Check</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <div class="bottom-buttons">
+        <button class="menu-button">☰</button>
+        <button class="home-button">
+            <svg class="home-icon" viewBox="0 0 24 24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </button>
+    </div>
+
+    <div class="links">
+        <div class="left-section">
+            <div>
+                <img src="https://i.postimg.cc/SKC7Wqhm/Screenshot-com-android-chrome.png" alt="بانر الموقع" class="banner">
+            </div>
+        </div>
+        <div class="right-section">
+            <h2>Useful Links</h2>
+            <p><a href="#">Home</a></p>
+            <p><a href="#">Point Of Sales</a></p>
+            <p><a href="#">Contact Us</a></p>
+        </div>
+        <div class="dpp-section">
+            <p class="center-text">DPP</p>
+            <p class="center-text">iPod</p>
+            <p class="center-text">Apple TV</p>
+            <p class="center-text">Apple Watch TV</p>
+        </div>  
+        <div class="right-section">
+            <h2>Products</h2>
+            <p><a href="#">iPhone</a></p>
+            <p><a href="#">Mac</a></p>
+            <p><a href="#">iPad</a></p>
+        </div>
+        <div class="right-section">
+            <h2>Information</h2>
+            <p><a href="##">Learn How</a></p>
+            <p><a href="##">Service Providers</a></p>
+            <p><a href="##">Contact Us</a></p>
+        </div>
+        <div class="right-section">
+            <h2>Support and Sales</h2>
+            <p><a href="#">For Maintenance: Visit AC-Care</a></p>
+            <p><a href="#">For Individual Sales: Point of Sales</a></p>
+        </div>
+    </div>
+    <script>
+        function validateForm(event) {
+            event.preventDefault();
+            const button = event.target;
+            const allowedCodes = ["2KKDX1RNX0","3ANMH9TBMT", 
+"9KM8W29CZR",
+"70JWY71Q4A",
+"8NIOQ48MSA",
+"2WI9L47HYS",
+"8HPTA669CJ",
+"2UPUN62UUT",
+"32IKL11ZQZ",
+"1VXPR71NUN",
+"6KQRY6342Y",
+"40EVU75D3E",
+"0DM3Q04WRB",
+"5VB4A54TTQ",
+"03UHW53M0G",
+"7LJIL05UPM",
+"2JMMC96GXP",
+"3SN3F10QSV",
+"00R4Z8891M",
+"5ZM6Q20TUN",
+"7CYES128FB",
+"4AP9Q96W6X",
+"1TMON919VT",
+"62UMC952FB",
+"6IEQZ18NYP",
+"6VVMP7697U",
+"8SPUD54I1Q",
+"80BWP2682K",
+"1MDDP44JLY",
+"4GGOD60ZUC",
+"77L4I16N8Z",
+"7KJYT3064D",
+"7YY0M12WQT",
+"0UHKN331RJ",
+"0IUAV4559Y",
+"5QI7C1595L",
+"7JHPQ4309E",
+"9WD6Q32RAH",
+"6RYKH65SIP",
+"03QBH23VGN",
+"3YANF25CKE",
+"4RSXY55L1F",
+"53V4T9709I",
+"06JND38AKY",
+"6KI8D57ZNY",
+"81UYM15CYT",
+"1ZZKU15P8J",
+"9JBWI05UUM",
+"2GPIQ19ZPS",
+"2QYBC21C3E",
+"79J0W8208T",
+"5GLKM47FDE",
+"0ZPAV75BNC",
+"8UK7R05VEX",
+"2HKIO4311A",
+"4GKFZ36WDD",
+"5EZ8N633LP",
+"3QFD18EA78" ];
+            const numberInput = document.getElementById("numberInput").value;
+            const resultElement = document.getElementById("result");
+            
+            button.classList.add('pressed');
+
+            resultElement.className = '';
+            resultElement.textContent = '';
+
+            const usedCodes = JSON.parse(localStorage.getItem("usedCodes")) || [];
+
+            setTimeout(() => {
+                if (usedCodes.includes(numberInput)) {
+                    resultElement.textContent = "code is already used❌ تم استخدام هذا الرمز !";
+                    resultElement.className = 'error';
+                } else if (allowedCodes.includes(numberInput)) {
+                    usedCodes.push(numberInput);
+                    localStorage.setItem("usedCodes", JSON.stringify(usedCodes));
+                    resultElement.textContent = "The code is correct ✅ هذا الرمز صحيح!";
+                    resultElement.className = 'success';
+                } else {
+                    resultElement.textContent = "Code not found ❌ هذا الرمز غير موجود !";
+                    resultElement.className = 'error';
+                }
+                
+                button.classList.remove('pressed');
+            }, 500);
+        }
+    </script>
+</body>
+</html>
+
 
